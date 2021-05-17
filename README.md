@@ -1,70 +1,19 @@
-# Getting Started with Create React App
+# Skills Learnt
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- FormData
+- Hooks in Reacts
+- Class components and functional components
+- Theming
+- Learnt how to use Styled-Components
+-
 
-## Available Scripts
+My current philosophy that drives my process in web development is to create a project that is much better than the previous. When I plan on doing this project, what made me excited was knowing I can do something creative and different from everyone elses'. That process of creation and designing a website myself brings me a lot of fulfillment. **Create a project that matters to you. Don't deny the full capabilities you are capable of**. Each project, no matter how simple, can be made great. Good is not enough if you want to do something that matters. Good is not enough if you want to matter. Everyone can do good but expectational? That's something else. That is my goal. I am a mere beginner currently and I hope to get better in my next project.
 
-In the project directory, you can run:
+I want you to redo your code because it is becoming way too messy to handle. You are passing too many props down that I don't think is a effective method to go about creating this site. Secondly, your frustration and annoyance is driving your ability to write quality code down greatly. Thirdly, you should implement some new technologies so you can effectively utilize the correct tools at hand. Fourthly, apply
 
-### `yarn start`
+- good planning strategies tomorrow
+- utilize useContext() and {children} prop. Use components since your project ain't too big.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I want to be like Dan Abramov. This guy is incredible. The efforts he puts in and the amazing work he is creating is revolutionary. I want to be as good as him
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Learning new things everyday is a good way to expand your knowledge.
