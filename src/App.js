@@ -1,9 +1,14 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useReducer, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import uniqid from "uniqid";
 import { ExpAndEdu } from "./components/forms/expAndEduController";
 import { PersonalDetails } from "./components/forms/personalForm";
-import { FormContextProvider, FormContext } from "./components/forms/formContext";
+import {
+  FormContextProvider,
+  FormContext,
+  INITIAL_STATE,
+  TEMPLATE_STATE,
+} from "./components/forms/formContext";
 import { GlobalStyle } from "./styles/globalStyles";
 import { lightTheme, darkTheme, ThemeSwitcher } from "./styles/themes";
 import LightThemeButton from "./assets/Light.svg";
@@ -13,26 +18,70 @@ import { useHistory } from "react-router-dom";
 import { SideInfoForm } from "./components/forms/sideInfoForm";
 import { ResumeTemplate } from "./components/forms/resume";
 import { HomePage } from "./components/forms/home";
+import Particles from "react-particles-js";
+import { Animation } from "./styles/utilities";
+import ParticlesConfig from "./components/particlesjs-config.json";
+const formReducer = (state, action) => {
+  if (action.delete) {
+    return {
+      ...state,
+      [action.category]: INITIAL_STATE[action.category],
+    };
+  }
+
+  if (action.deleteFromArray) {
+    return {
+      ...state,
+      [action.category]: state[action.category].filter((item) => item.id !== action.id),
+    };
+  }
+  if (action.save) {
+    console.log(action.data);
+    return {
+      ...state,
+      [action.category]: state[action.category].concat(action.data),
+      [action.form]: INITIAL_STATE[action.form],
+    };
+  }
+
+  if (action.edit) {
+    return {
+      ...state,
+      [action.category]: state[action.category].filter((item) => item !== action.data),
+      [action.form]: action.data,
+    };
+  }
+
+  if (action.photo) {
+    return {
+      ...state,
+      [action.category]: action.url,
+    };
+  }
+
+  if (action.sideInfo) {
+    return {
+      ...state,
+      [action.category]: state[action.category].concat(action.data),
+    };
+  }
+  return {
+    ...state,
+    [action.category]: {
+      ...state[action.category],
+      [action.id]: action.value,
+      id: uniqid(),
+    },
+  };
+};
 
 const App = () => {
   const [theme, setTheme] = useState("light");
-  const [personal, setPersonal] = useState();
-  const [education, setEducation] = useState([]);
-  const [experience, setExperience] = useState([]);
-  const [sideInfo, setSideInfo] = useState({
-    profile: "",
-    skills: [],
-    interests: [],
-    social: {
-      github: "",
-      insta: "",
-      facebook: "",
-      linkedIn: "",
-      youtube: "",
-    },
-    photo: "",
-    website: "",
-  });
+  const [experienceOn, setExperienceMode] = useState(false);
+  const [educationOn, setEducationMode] = useState(false);
+  const [expEdit, setExpEdit] = useState(false);
+  const [eduEdit, setEduEdit] = useState(false);
+  const [state, dispatch] = useReducer(formReducer, TEMPLATE_STATE);
 
   const themeToggler = () => {
     if (theme === "light") {
@@ -43,59 +92,58 @@ const App = () => {
   };
 
   const history = useHistory();
-  const onSubmitHandler = (e, currentPage, toNextPage) => {
+  const switchPage = (e, currentPage, toNextPage) => {
     e.preventDefault();
-    updateState(e, currentPage);
     toNextPage === true
       ? history.push(defineNextPage(currentPage))
       : history.push(definePrevPage(currentPage));
   };
 
-  const updateState = (e, currentSection) => {
-    const data = new FormData(e.target);
-    let currentState = [];
-    switch (currentSection) {
-      case "personal":
-        currentState = [personal, setPersonal];
-        addObject(currentState, data);
-        return;
-      case "experience":
-        currentState = [experience, setExperience];
-        addNewItemToArray(currentState, data);
-        return;
-      case "education":
-        currentState = [education, setEducation];
-        addNewItemToArray(currentState, data);
-        return;
-      case "SideInfo":
-        currentState = [sideInfo, setSideInfo];
-        addObject(currentState, data);
-        return;
-    }
+  const handleChange = (e, category) => {
+    const value = e.target.value;
+    const id = e.target.id;
+
+    dispatch({ value, id, category });
   };
-  const value = useContext(FormContext);
 
   return (
     <React.Fragment>
-      <FormContextProvider value={"yo"}>
-        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-          <GlobalStyle />
+      <Animation>
+        <Particles params={ParticlesConfig} style={{ position: "fixed" }} />
+      </Animation>
+
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyle />
+        <FormContext.Provider
+          value={{
+            state,
+            handleChange,
+            switchPage,
+            dispatch,
+            expEdit,
+            setExpEdit,
+            eduEdit,
+            setEduEdit,
+          }}
+        >
           <ThemeSwitcher
             type="image"
             onClick={themeToggler}
             src={theme === "light" ? LightThemeButton : DarkThemeButton}
           />
-          {/* <Switch> */}
-          {/* <Route exact path="/">
+          <Switch>
+            <Route exact path="/">
               <HomePage />
-            </Route> */}
-          {/* <Route exact path="/personal"> */}
-          {value}
-          <PersonalDetails />
-          {/* </Route> */}
+            </Route>
+            <Route exact path="/personal">
+              <PersonalDetails />
+            </Route>
 
-          {/* <Route exact path="/expAndEdu">
-              <ExpAndEdu />
+            <Route exact path="/expAndEdu">
+              <ExpAndEdu
+                exp={{ experienceOn, setExperienceMode }}
+                edu={{ educationOn, setEducationMode }}
+              />
             </Route>
 
             <Route exact path="/sideInfoForm">
@@ -104,21 +152,12 @@ const App = () => {
 
             <Route exact path="/resumeTemplate">
               <ResumeTemplate />
-            </Route> */}
-          {/* </Switch> */}
-        </ThemeProvider>
-      </FormContextProvider>
+            </Route>
+          </Switch>
+        </FormContext.Provider>
+      </ThemeProvider>
     </React.Fragment>
   );
-};
-
-const addObject = (currentState, data) => {
-  const updatedObject = { ...currentState[0] };
-  for (let [key, value] of data.entries()) {
-    updatedObject[key] = value;
-  }
-  console.log(updatedObject);
-  currentState[1](updatedObject);
 };
 
 const defineNextPage = (currentSection) => {

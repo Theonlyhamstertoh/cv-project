@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import trashcanButton from "../../assets/trashcan.svg";
 import saveButton from "../../assets/save.svg";
 import editButton from "../../assets/edit.svg";
@@ -15,68 +15,46 @@ import {
   ItemContainer,
   SubTitle,
 } from "../../styles/utilities";
+import { FormContext } from "./formContext";
 
 export const ExperienceForm = (props) => {
-  const submitInfo = (e) => {
-    props.onSubmit(e, "experience");
-    props.changeExp(false);
-  };
-
-  if (props.showExpInput === false) {
+  const { state } = useContext(FormContext);
+  const { jobName, startDate, endDate, companyName, location, description } = state.exp;
+  if (props.experienceOn === false) {
     return null;
   }
 
   return (
-    <form onSubmit={submitInfo}>
+    <form onSubmit={(e) => props.save(e, "expArray", state.exp, "exp")}>
       <Grid>
-        <InputText full name="jobName" label="Your Job Title" />
-        <InputText date half name="startDate" label="Start Date" />
-        <InputText date half name="endDate" label="End Date" />
-        <InputText half name="companyName" label="Company Name" />
-        <InputText half name="location" label="Location" />
-        <TextAreaBlock full name="description" label="Description" />
+        <InputText exp value={jobName} full id="jobName" label="Your Job Title" />
+        <InputText exp value={startDate} date half id="startDate" label="Start Date" />
+        <InputText exp value={endDate} date half id="endDate" label="End Date" />
+        <InputText exp value={companyName} half id="companyName" label="Company Name" />
+        <InputText exp value={location} half id="location" label="Location" />
+        <TextAreaBlock exp value={description} full id="description" label="Description" />
+
         <div>
-          <Icon trash src={trashcanButton} alt="trashcan" onClick={() => props.changeExp(false)} />
-          <Icon type="image" save src={saveButton} />
+          <Icon trash src={trashcanButton} alt="trashcan" onClick={() => props.delete("exp")} />
+          <Icon save as="input" type="image" src={saveButton} alt="save" />
         </div>
       </Grid>
     </form>
   );
 };
 
-// if (props.experience !== undefined && props.experience !== null) {
-//   const { jobName, startDate, endDate, companyName, location, description } = props.experience;
-//   return (
-//     <form onSubmit={submitInfo}>
-//       <Grid>
-//         <InputText full name="jobName" value="Your Job Title" inputText={jobName} />
-//         <InputText date half name="startDate" value="Start Date" inputText={startDate} />
-//         <InputText date half name="endDate" value="End Date" inputText={endDate} />
-//         <InputText half name="companyName" value="Company Name" inputText={companyName} />
-//         <InputText half name="location" value="Location" inputText={location} />
-//         {/* <TextAreaBlock full name="description" value="Description" inputText={description} /> */}
-//         <div>
-//           <Icon
-//             type="button"
-//             trash
-//             src={trashcanButton}
-//             alt="trashcan"
-//             onClick={() => props.changeExp(false)}
-//           />
-//           <Icon as="input" type="image" save src={saveButton} />
-//         </div>
-//       </Grid>
-//     </form>
-//   );
-// }
-
 export const ExpItem = (props) => {
-  const { companyName, startDate, endDate, jobName, location, description } = props.data;
-  const onDelete = props.onDelete;
+  const { companyName, startDate, endDate, jobName, location, description, id } = props.data;
+
   return (
     <ItemContainer>
+      <SubTitle as="h2">{jobName}</SubTitle>
+      <Caption>
+        {companyName} / {location} / {dateConverter(startDate)} - {dateConverter(endDate)}
+      </Caption>
+      <Description>{description}</Description>
       <PositionRight>
-        <EditIcon as="span">
+        <EditIcon as="span" onClick={(e) => props.edit("expArray", "exp", id)}>
           <img src={editButton} alt="edit" style={{ userSelect: "none" }} />
         </EditIcon>
         <Icon
@@ -84,14 +62,9 @@ export const ExpItem = (props) => {
           trash
           src={trashcanButton}
           alt="trashcan"
-          onClick={() => onDelete(props.id, "experience")}
+          onClick={() => props.delete("expArray", id)}
         />
       </PositionRight>
-      <SubTitle as="h2">{jobName}</SubTitle>
-      <Caption>
-        {companyName} / {location} / {dateConverter(startDate)} - {dateConverter(endDate)}
-      </Caption>
-      <Description>{description}</Description>
     </ItemContainer>
   );
 };

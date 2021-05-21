@@ -1,5 +1,25 @@
 import styled, { css, keyframes } from "styled-components";
-import { global, resume } from "./themes";
+import { global, resume, device } from "./themes";
+
+const size = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "425px",
+  tablet: "768px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+export const devices = {
+  mobileS: `(max-width: ${size.mobileS})`,
+  mobileM: `(min-width: ${size.mobileM})`,
+  mobileL: `(min-width: ${size.mobileL})`,
+  tablet: `(min-width: ${size.tablet})`,
+  laptop: `(min-width: ${size.laptop})`,
+  laptopL: `(min-width: ${size.laptopL})`,
+  desktop: `(min-width: ${size.desktop})`,
+  desktopL: `(min-width: ${size.desktop})`,
+};
 
 export const Board = styled.section`
   width: 700px;
@@ -7,12 +27,28 @@ export const Board = styled.section`
   box-shadow: ${global.boxShadow};
   border-radius: ${global.borderRadius};
   background-color: ${({ theme }) => theme.mainboxColor};
+
+  @media ${device.mobileL} {
+    width: 90%;
+    padding: 10px;
+    margin: 5px;
+  }
+
+  @media ${device.tablet} {
+    width: 80%;
+    padding: 10px;
+    margin: 5px;
+  }
 `;
 export const Grid = styled.div`
   display: grid;
   column-gap: 20px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(autofill, auto);
+
+  @media ${device.mobileL} {
+    display: block;
+  }
 `;
 export const Title = styled.h1`
   font-size: 30px;
@@ -28,14 +64,15 @@ export const SubTitle = styled(Title)`
   margin-top: 0;
   text-align: ${(props) => (props.center ? "center" : "initial")};
   margin-bottom: 5px;
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   ${(props) =>
     props.fadeIn &&
     css`
       opacity: 0;
       color: red;
       animation: ${FadeInSlowly} 8s 10s forwards;
-      /* animation-delay: 5s; */
     `};
 `;
 export const InputContainer = styled.div`
@@ -53,9 +90,14 @@ export const Input = styled.input`
   user-select: none;
   outline: none;
   padding: 12px;
+  width: auto;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.inputColor};
   border-radius: ${global.borderRadius};
+
+  @media ${device.mobileS} {
+    font-size: 11px;
+  }
 `;
 
 export const TextArea = styled.textarea`
@@ -84,6 +126,10 @@ export const FlexBetween = styled.div`
 export const FlexCenter = styled.div`
   display: flex;
   justify-content: center;
+`;
+export const FlexEnd = styled.div`
+  display: flex;
+  align-items: flex-end;
 `;
 
 export const PrimaryButton = styled.input`
@@ -123,6 +169,14 @@ export const PrimaryButton = styled.input`
     background-color: transparent;
     color: ${(props) => (props.backButton ? "#d15056" : global.mainColor)};
   }
+
+  @media ${device.mobileS} {
+    width: 120px;
+  }
+
+  @media ${device.mobileL} {
+    width: 150px;
+  }
 `;
 
 const MovingUpAndDown = keyframes`
@@ -134,7 +188,7 @@ const MovingUpAndDown = keyframes`
 
   60% {
     background: #7958b1;
-    transform: translateY(-15px)
+    transform: translateY(6px)
   }
 `;
 
@@ -160,12 +214,24 @@ export const Icon = styled.img`
   padding: 7px;
   margin: ${(props) => (props.noMargin ? "0px" : "15px 10px 15px 0")};
   width: ${(props) => (props.smaller ? "20px" : "25px")};
+  height: ${(props) => (props.smaller ? "20px" : "25px")};
   outline: none;
   background-color: ${(props) => (props.trash ? "#D28080" : "#70BA8B")};
   border-radius: ${global.borderRadius};
   border: none;
   cursor: pointer;
   transition: 0.3s all;
+
+  ${(props) =>
+    props.side &&
+    css`
+      margin: 0 0 5px 10px;
+
+      @media ${device.mobileS} {
+        margin: 0px 0px 6px 4px;
+      }
+    `};
+
   &:hover {
     background-color: ${(props) => (props.trash ? "#D53838" : "#2E9253")};
   }
@@ -174,6 +240,11 @@ export const Icon = styled.img`
   }
 `;
 
+export const FileIcon = styled.img`
+  padding: 7px;
+  margin: 20px 0;
+  max-width: 75%;
+`;
 export const EditIcon = styled(Icon)`
   padding: 8px 9.6px;
   width: fit-content;
@@ -189,6 +260,19 @@ export const EditIcon = styled(Icon)`
   }
 `;
 
+export const PositionRight = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+`;
+
+export const Animation = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -999;
+`;
 export const ItemContainer = styled.div`
   padding: 20px;
   position: relative;
@@ -203,42 +287,34 @@ export const ItemContainer = styled.div`
       justify-content: space-between;
       align-items: center;
     `};
-`;
-export const PositionRight = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-`;
 
-export const unofficialResume = {
-  titleFont: "40px",
-  subtitleFont: "26px",
-  headingFont: "16px",
-  textFont: "11px",
-  contactFont: "9px",
-  captionColor: "#5E5E5E",
-  whiteFontColor: "#E4E4E4",
-  blackFontColor: "#242424",
-  breakline: "#70707070",
-  sidebarColor: "#3b3b3b",
-};
+  @media ${device.mobileL} {
+    padding-bottom: ${(props) => (props.flex ? "8px" : "70px")};
+    ${PositionRight} {
+      position: absolute;
+      bottom: 0;
+      align-items: flex-end;
+    }
+  }
+  @media ${device.tablet} {
+    padding-bottom: ${(props) => (props.flex ? "8px" : "70px")};
+    ${PositionRight} {
+      position: absolute;
+      bottom: 0;
+      align-items: flex-end;
+    }
+  }
+`;
 
 // resume
-export const Resume = styled.div`
-  width: 215.9mm;
-  height: 279.4mm;
-  box-shadow: ${global.boxShadow};
-  background-color: white;
-  display: flex;
-`;
 
 export const Sidebar = styled.div`
   background: ${resume.sidebarColor};
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 2.1in;
+  width: 2.2in;
+  padding: 10px;
 `;
 export const MainSection = styled.div`
   padding: 20px;
@@ -258,42 +334,51 @@ export const ResumeTitle = styled.h1`
 `;
 
 export const ResumeUsername = styled(Title)`
-  font-size: 25px;
+  font-size: 1.5625rem;
+  width: 100%;
   font-family: "segoeBold";
   color: ${resume.whiteFontColor};
   margin-bottom: 5px;
+  text-align: center;
+  word-wrap: break-word;
 `;
 
 export const ResumeUserJob = styled(ResumeTitle)`
   color: ${resume.whiteFontColor};
-  font-size: 19px;
+  font-size: 1.1875rem;
+  text-align: center;
+  word-wrap: break-word;
+  width: 100%;
 `;
 
 export const ResumeIcon = styled.img`
   border-radius: 100%;
   width: 140px;
+  height: 140px;
   margin: 10px 0;
   border: 3px solid #ffffff20;
-  ${(props) =>
-    props.smallIcon &&
-    css`
-      border-radius: 0;
-      border: none;
-      width: 14px;
-      padding: 8px 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0;
-      margin-top: 5px;
-    `};
 `;
 
+export const ContactIcon = styled.img`
+  border-radius: 0;
+  border: none;
+  width: 18px;
+  height: 18px;
+  padding: 8px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  margin-top: 5px;
+`;
 export const ResumeBullets = styled.li`
   font-size: 13px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
+  padding: 3px;
+  word-break: ${(props) => props.breakAll && "break-all"};
   word-break: break-all;
 `;
 export const ResumeList = styled.ul`
@@ -304,13 +389,13 @@ export const ResumeList = styled.ul`
   font-family: "segoeReg";
   font-weight: 200;
   font-size: ${resume.textFont};
+  width: 100%;
 `;
 export const ResumeHeading = styled(ResumeTitle)`
   font-size: ${resume.heading1Font};
   color: ${resume.whiteFontColor};
   text-align: center;
   border-bottom: ${(props) => (props.borderBottom ? "1px solid" + resume.breakline : "none")};
-  min-width: 120px;
   margin: 20px 20px 5px 20px;
 `;
 export const ResumeSubTitle = styled(SubTitle)`
@@ -322,6 +407,7 @@ export const ResumeSubTitle = styled(SubTitle)`
 
 export const Description = styled.p`
   text-align: justify;
+  word-wrap: break-word;
   margin-top: 15px;
   color: ${({ theme }) => theme.textColor};
   font-size: 14px;
@@ -331,13 +417,14 @@ export const Description = styled.p`
 export const Caption = styled.p`
   color: ${({ theme }) => theme.textColor};
   font-family: "segoeLightItalic", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 9px;
+  font-size: 11px;
   margin: 0;
 `;
 
 export const ResumeDescription = styled(Description)`
   font-family: "segoeReg";
   font-weight: 300;
+  margin-top: 4px;
   color: ${resume.blackFontColor};
 `;
 
@@ -346,4 +433,67 @@ export const ResumeCaption = styled(Caption)`
   font-weight: 300;
   color: ${resume.captionColor};
   font-size: 13px;
+`;
+
+export const Resume = styled.div`
+  width: 215.9mm;
+  height: 279.4mm;
+  box-shadow: ${global.boxShadow};
+  background-color: white;
+  display: flex;
+
+  @media ${device.mobileL} {
+    width: auto;
+    height: auto;
+
+    ${Sidebar} {
+      width: 35%;
+    }
+
+    ${MainSection} {
+      width: 65%;
+    }
+
+    ${ResumeUsername} {
+      font-size: 12px;
+    }
+
+    ${ResumeIcon} {
+      width: 60px;
+      height: 60px;
+    }
+
+    ${ResumeBullets} {
+      font-size: 9px;
+    }
+
+    ${ResumeTitle} {
+      font-size: 20px;
+    }
+
+    ${ResumeUserJob} {
+      font-size: 10px;
+    }
+    ${ResumeHeading} {
+      font-size: 13px;
+      margin: 0px;
+    }
+
+    ${ResumeItem} {
+      width: 100%;
+      margin: 0;
+    }
+
+    ${ResumeDescription} {
+      font-size: 10px;
+    }
+
+    ${Caption} {
+      font-size: 10px;
+    }
+
+    ${ResumeSubTitle} {
+      font-size: 13px;
+    }
+  }
 `;

@@ -8,7 +8,7 @@ import segoeUIBL from "../fonts/SEGUIBL.TTF";
 import segoeUIISB from "../fonts/SEGUISB.TTF";
 import segoeUILI from "../fonts/SEGUILI.TTF";
 import GreatVibes from "../fonts/GreatVibes-Regular.ttf";
-import { global } from "./themes";
+import { global, device } from "./themes";
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -50,10 +50,11 @@ export const GlobalStyle = createGlobalStyle`
     margin-bottom: 5rem;
     font-weight: bolder;
     box-sizing: border-box;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
+    margin-top: 5rem;
     color: ${global.mainColor};
+    display: flex; 
+    overflow-x: hidden;
+    justify-content: center;
     background-color: ${({ theme }) => theme.background};
   }
 
@@ -61,7 +62,13 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "segoeBold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   #root {
-    margin-top: 5rem;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 100vw;
+
   }
   h1, h2, h3, h4, h5, h6 {
     margin: 0;

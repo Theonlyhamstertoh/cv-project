@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   ResumeTitle,
   Resume,
@@ -17,115 +17,72 @@ import {
   ResumeList,
   FlexBetween,
   PrimaryButton,
+  ContactIcon,
 } from "../../styles/utilities";
 
-import phone from "../../assets/phone.svg";
+import phoneImg from "../../assets/phone.svg";
 import mail from "../../assets/mail.svg";
 import website from "../../assets/website.svg";
 import location from "../../assets/map-marker.svg";
-
+import { FormContext } from "./formContext";
+import { dateConverter } from "../reusable";
 export const ResumeTemplate = (props) => {
+  const { state, switchPage } = useContext(FormContext);
+  const { firstName, lastName, email, phone, address, zipcode, city, jobName } = state.personal;
+  let photo = state.photoURL;
+  if (photo === "") {
+    photo = "https://picsum.photos/200";
+  }
   return (
     <React.Fragment>
       <Resume>
         <Sidebar>
-          <ResumeUsername borderBottom>Weibo Zhang</ResumeUsername>
-          <ResumeUserJob>Web Designer</ResumeUserJob>
-          <ResumeIcon src="https://picsum.photos/200" />
+          <ResumeUsername borderBottom>
+            {firstName} {lastName}
+          </ResumeUsername>
+          <ResumeUserJob>{jobName}</ResumeUserJob>
+          <ResumeIcon src={photo} />
 
           <ResumeItem contact>
             <ResumeHeading borderBottom>Contact</ResumeHeading>
             <ResumeList>
-              <ContactItem src={location}>
-                9653 Devon St. Palos Verdes Peninsula, CA 90274
+              <ContactItem breakAll src={location}>
+                {address}, {city}, {zipcode}
               </ContactItem>
-              <ContactItem src={phone}>(626) 297 9032</ContactItem>
-              <ContactItem src={mail}>theonlyhamstertoh@gmail.com</ContactItem>
-              <ContactItem src={website}>www.weibozhang.com</ContactItem>
+              <ContactItem src={phoneImg}>{formatPhoneNumber(phone)}</ContactItem>
+              <ResumeBullets breakAll>
+                <ContactIcon smallIcon src={mail} />
+                {email}
+              </ResumeBullets>
             </ResumeList>
           </ResumeItem>
           <ResumeItem noMargin skills>
             <ResumeHeading borderBottom>Skills</ResumeHeading>
             <ResumeList>
-              <ResumeBullets>Adobe XD</ResumeBullets>
-              <ResumeBullets>Communication</ResumeBullets>
-              <ResumeBullets>Leadership</ResumeBullets>
-              <ResumeBullets>Organization</ResumeBullets>
-              <ResumeBullets>Perseverence</ResumeBullets>
-              <ResumeBullets>Disicplined</ResumeBullets>
-              <ResumeBullets>Teamwork</ResumeBullets>
+              {state.skills.map((item) => {
+                return <ResumeBullets>{item.text}</ResumeBullets>;
+              })}
             </ResumeList>
           </ResumeItem>
           <ResumeItem noMargin interests>
             <ResumeHeading borderBottom>Interests</ResumeHeading>
             <ResumeList>
-              <ResumeBullets>Adobe XD</ResumeBullets>
-              <ResumeBullets>Communication</ResumeBullets>
-              <ResumeBullets>Leadership</ResumeBullets>
-              <ResumeBullets>Organization</ResumeBullets>
-              <ResumeBullets>Perseverence</ResumeBullets>
-              <ResumeBullets>Disicplined</ResumeBullets>
-              <ResumeBullets>Teamwork</ResumeBullets>
+              {state.interests.map((item) => {
+                return <ResumeBullets>{item.text}</ResumeBullets>;
+              })}
             </ResumeList>
           </ResumeItem>
         </Sidebar>
+
         <MainSection>
           <ResumeTitle>Experience</ResumeTitle>
-          <ResumeItem>
-            <ResumeSubTitle>GRAPHICS DESIGNER</ResumeSubTitle>
-            <ResumeCaption>Watergate Corporation / London, UK / 2021 - 2022</ResumeCaption>
-            <ResumeDescription>
-              Input fields. Text areas. Radio buttons and checkboxes. These are some of the main
-              interaction points we, as developers, have with our users. We put them front and
-              center, users fill them out as best as they can, and with any luck, they’ll send it
-              back to you without any validation errors. Form handling is an integral part of a
-              large number of web apps, and it’s one of the things React does best. You have a lot
-              of freedom to implement and control those input controls how you want, and there are
-              plenty of ways to achieve the same goal. But is there a best practice? Is there a best
-              way to do things?
-            </ResumeDescription>
-          </ResumeItem>
-          <ResumeItem>
-            <ResumeSubTitle>GRAPHICS DESIGNER</ResumeSubTitle>
-            <ResumeCaption>Watergate Corporation / London, UK / 2021 - 2022</ResumeCaption>
-            <ResumeDescription>
-              Input fields. Text areas. Radio buttons and checkboxes. These are some of the main
-              interaction points we, as developers, have with our users. We put them front and
-              center, users fill them out as best as they can, and with any luck, they’ll send it
-              back to you without any validation errors. Form handling is an integral part of a
-              large number of web apps, and it’s one of the things React does best. You have a lot
-              of freedom to implement and control those input controls how you want, and there are
-              plenty of ways to achieve the same goal. But is there a best practice? Is there a best
-              way to do things?
-            </ResumeDescription>
-          </ResumeItem>
-          <ResumeItem>
-            <ResumeSubTitle>GRAPHICS DESIGNER</ResumeSubTitle>
-            <ResumeCaption>Watergate Corporation / London, UK / 2021 - 2022</ResumeCaption>
-            <ResumeDescription>
-              Input fields. Text areas. Radio buttons and checkboxes. These are some of the main
-              interaction points we, as developers, have with our users. We put them front and
-              center, users fill them out as best as they can, and with any luck, they’ll send it
-              back to you without any validation errors. Form handling is an integral part of a
-              large number of web apps, and it’s one of the things React does best. You have a lot
-              of freedom to implement and control those input controls how you want, and there are
-              plenty of ways to achieve the same goal. But is there a best practice? Is there a best
-              way to do things?
-            </ResumeDescription>
-          </ResumeItem>
+          {state.expArray.map((item) => {
+            return <ResumeExpList data={item} key={item.id} />;
+          })}
           <ResumeTitle>Education</ResumeTitle>
-          <ResumeItem>
-            <ResumeSubTitle>Bachelor of Creative Arts & Design</ResumeSubTitle>
-            <ResumeCaption>Watergate Corporation / London, UK / 2021 - 2022</ResumeCaption>
-          </ResumeItem>
-          <ResumeItem>
-            <ResumeSubTitle>Bachelor of Creative Arts & Design</ResumeSubTitle>
-            <ResumeCaption>Watergate Corporation / London, UK / 2021 - 2022</ResumeCaption>
-          </ResumeItem>
-          <ResumeItem>
-            <ResumeSubTitle>Bachelor of Creative Arts & Design</ResumeSubTitle>
-            <ResumeCaption>Watergate Corporation / London, UK / 2021 - 2022</ResumeCaption>
-          </ResumeItem>
+          {state.eduArray.map((item) => {
+            return <ResumeEduList data={item} key={item.id} />;
+          })}
         </MainSection>
       </Resume>
       <FlexBetween>
@@ -133,17 +90,52 @@ export const ResumeTemplate = (props) => {
           backButton
           type="button"
           value="Back"
-          onClick={(e) => props.onSubmit(e, "resumeTemplate", false)}
+          onClick={(e) => switchPage(e, "resumeTemplate", false)}
         />
       </FlexBetween>
     </React.Fragment>
   );
 };
 
+function formatPhoneNumber(phoneNumberString) {
+  const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+  const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    const intlCode = match[1] ? "+1 " : "";
+    return [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
+  }
+  return null;
+}
+
+const ResumeExpList = (props) => {
+  const { companyName, startDate, endDate, jobName, location, description } = props.data;
+
+  return (
+    <ResumeItem>
+      <ResumeSubTitle>{jobName}</ResumeSubTitle>
+      <ResumeCaption>
+        {companyName} / {location} / {dateConverter(startDate)} - {dateConverter(endDate)}
+      </ResumeCaption>
+      <ResumeDescription>{description}</ResumeDescription>
+    </ResumeItem>
+  );
+};
+
+const ResumeEduList = (props) => {
+  const { educationName, startDate, endDate, degree, location, id } = props.data;
+  return (
+    <ResumeItem>
+      <ResumeSubTitle>{degree}</ResumeSubTitle>
+      <ResumeCaption>
+        {educationName} / {location} / {dateConverter(startDate)} - {dateConverter(endDate)}
+      </ResumeCaption>
+    </ResumeItem>
+  );
+};
 const ContactItem = (props) => {
   return (
-    <ResumeBullets small>
-      <ResumeIcon smallIcon src={props.src} />
+    <ResumeBullets>
+      <ContactIcon src={props.src} />
       {props.children}
     </ResumeBullets>
   );

@@ -1,8 +1,16 @@
-import React from "react";
-
-import { Input, InputContainer, Asterisk, SecondaryButton, TextArea } from "../styles/utilities";
-
+import React, { useContext } from "react";
+import {
+  Input,
+  InputContainer,
+  Asterisk,
+  SecondaryButton,
+  TextArea,
+  Icon,
+} from "../styles/utilities";
+import trashcanButton from "../assets/trashcan.svg";
+import saveButton from "../assets/save.svg";
 import { format } from "date-fns";
+import { FormContext } from "./forms/formContext";
 
 export const dateConverter = (date) => {
   const dateArray = date.split("-");
@@ -13,28 +21,51 @@ export const SecondaryBtn = (props) => {
   return <SecondaryButton type="button" value={props.value} onClick={props.onClick} />;
 };
 
-export const InputText = ({ name, label, full, type }) => {
+export const InputText = (props) => {
+  const { id, label, full, date, value } = props;
+  const { handleChange } = useContext(FormContext);
+
+  let category = determineCategory(props);
+
   return (
     <InputContainer type={full ? "full" : "half"}>
-      <label htmlFor={name}>
+      <label htmlFor={id}>
         {label}
         <Asterisk>*</Asterisk>
       </label>
-      <Input type={type ? "date" : "text"} id={name} name={name} required />
+      <Input
+        type={date ? "date" : "text"}
+        value={value}
+        id={id}
+        required
+        onChange={(e) => handleChange(e, category)}
+      />
     </InputContainer>
   );
 };
 
+const determineCategory = (props) => {
+  if (props.exp) {
+    return "exp";
+  } else if (props.personal) {
+    return "personal";
+  } else if (props.edu) {
+    return "edu";
+  }
+};
+
 export const TextAreaBlock = (props) => {
-  const { label, name } = props;
+  const { label, id, value } = props;
+  const { handleChange } = useContext(FormContext);
+  let category = determineCategory(props);
 
   return (
     <InputContainer type="full">
-      <label htmlFor={name}>
+      <label htmlFor={id}>
         {label}
         <Asterisk>*</Asterisk>
       </label>
-      <TextArea id={name} name={name} maxLength="700" required />
+      <TextArea id={id} value={value} onChange={(e) => handleChange(e, category)} required />
     </InputContainer>
   );
 };

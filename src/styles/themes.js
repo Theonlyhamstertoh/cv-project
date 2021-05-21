@@ -25,16 +25,38 @@ export const darkTheme = {
 };
 
 export const resume = {
-  titleFont: "50px",
-  heading1Font: "35px",
-  heading2Font: "16px",
-  textFont: "13px",
+  titleFont: "3.125rem",
+  heading1Font: "2.1875rem",
+  heading2Font: "1rem",
+  textFont: "0.8125rem",
+  captionFont: "14px",
   contactFont: "9px",
   captionColor: "#5E5E5E",
   whiteFontColor: "#E4E4E4",
   blackFontColor: "#242424",
   breakline: "#70707070",
   sidebarColor: "#2f2f2f",
+};
+
+const size = {
+  mobileS: "320px",
+  mobileM: "395px",
+  mobileL: "455px",
+  tablet: "768px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+export const device = {
+  mobileS: `(max-width: ${size.mobileS})`,
+  mobileM: `(max-width: ${size.mobileM})`,
+  mobileL: `(max-width: ${size.mobileL}) `,
+  tablet: `(max-width: ${size.tablet}) and (min-width: ${size.mobileL})`,
+  tabletOnly: `(max-width: ${size.tablet}))`,
+  laptop: `(max-width: ${size.laptop})`,
+  laptopL: `(max-width: ${size.laptopL})`,
+  desktop: `(max-width: ${size.desktop})`,
+  desktopL: `(max-width: ${size.desktop})`,
 };
 
 export const ThemeSwitcher = styled.input`
