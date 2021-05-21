@@ -1,3 +1,7 @@
+# Demo
+
+Link: https://cvprojectapp.netlify.app/
+
 # Skills Learnt
 
 - FormData
@@ -5,15 +9,20 @@
 - Class components and functional components
 - Theming
 - Learnt how to use Styled-Components
--
+- React Routers and multiple page set up
+- Deploying to netlify
+- useState, useReducer, useContext
 
-My current philosophy that drives my process in web development is to create a project that is much better than the previous. When I plan on doing this project, what made me excited was knowing I can do something creative and different from everyone elses'. That process of creation and designing a website myself brings me a lot of fulfillment. **Create a project that matters to you. Don't deny the full capabilities you are capable of**. Each project, no matter how simple, can be made great. Good is not enough if you want to do something that matters. Good is not enough if you want to matter. Everyone can do good but expectational? That's something else. That is my goal. I am a mere beginner currently and I hope to get better in my next project.
+# Attribution
 
-I want you to redo your code because it is becoming way too messy to handle. You are passing too many props down that I don't think is a effective method to go about creating this site. Secondly, your frustration and annoyance is driving your ability to write quality code down greatly. Thirdly, you should implement some new technologies so you can effectively utilize the correct tools at hand. Fourthly, apply
+- Used material UI icons
+- Used particles.js
 
-- good planning strategies tomorrow
-- utilize useContext() and {children} prop. Use components since your project ain't too big.
+# Reflection
 
-I want to be like Dan Abramov. This guy is incredible. The efforts he puts in and the amazing work he is creating is revolutionary. I want to be as good as him
+Wow was this project more complicated and time-consuming than I have originally planned. A lot of work was needed to be dealt that I never plan. My average understanding of the states and the new way of utilizing JSX brought me a great deal of confusion and mess. Knowing that I can move on brings me relief. I hope to carry over in my next project **better organization, learn more about git and commiting more, ask for questions, and do better planning.**
 
-Learning new things everyday is a good way to expand your knowledge.
+I'M FREE FROM THIS PROJECT.
+
+Plan for next project
+I would like to spend time doing some cooler things. Enough of the forms. Time to play music!
