@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84" height="70" viewBox="0 0 84 70">
+  <defs>
+    <filter id="Rectangle_10" x="0" y="0" width="84" height="70" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Light" transform="translate(-2744 270)">
+    <g id="Group_6" data-name="Group 6" transform="translate(2752.732 -264)">
+      <g transform="matrix(1, 0, 0, 1, -8.73, -6)" filter="url(#Rectangle_10)">
+        <rect id="Rectangle_10-2" data-name="Rectangle 10" width="66" height="52" rx="13" transform="translate(9 6)" fill="#9e80d2"/>
+      </g>
+    </g>
+    <g id="light_mode_black_24dp" transform="translate(2767.056 -256.838)">
+      <rect id="Rectangle_14" data-name="Rectangle 14" width="39" height="39" transform="translate(-0.056 -0.162)" fill="none"/>
+      <path id="Path_12" data-name="Path 12" d="M18.609,13.806a4.8,4.8,0,1,1-4.8,4.8,4.817,4.817,0,0,1,4.8-4.8m0-3.2a8,8,0,1,0,8,8,8.007,8.007,0,0,0-8-8ZM2.6,20.21H5.8a1.6,1.6,0,0,0,0-3.2H2.6a1.6,1.6,0,0,0,0,3.2Zm28.815,0h3.2a1.6,1.6,0,0,0,0-3.2h-3.2a1.6,1.6,0,0,0,0,3.2ZM17.008,2.6V5.8a1.6,1.6,0,0,0,3.2,0V2.6a1.6,1.6,0,0,0-3.2,0Zm0,28.815v3.2a1.6,1.6,0,0,0,3.2,0v-3.2a1.6,1.6,0,0,0-3.2,0ZM8.988,6.731A1.6,1.6,0,0,0,6.731,8.988l1.7,1.7a1.6,1.6,0,0,0,2.257-2.257Zm19.8,19.8a1.6,1.6,0,0,0-2.257,2.257l1.7,1.7a1.6,1.6,0,0,0,2.257-2.257Zm1.7-17.545A1.6,1.6,0,0,0,28.23,6.731l-1.7,1.7a1.6,1.6,0,0,0,2.257,2.257Zm-19.8,19.8a1.6,1.6,0,0,0-2.257-2.257l-1.7,1.7a1.6,1.6,0,0,0,2.257,2.257Z" transform="translate(0.754 0.522)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
